@@ -17,7 +17,7 @@ module ActiveSupport
         plain = decode_cipher.update(Base64.decode64(data['data']))
         plain = plain + decode_cipher.final
 
-        entry = Marshal.load(serialized_entry) rescue serialized_entry
+        entry = Marshal.load(plain) rescue serialized_entry
         entry.is_a?(Entry) ? entry : Entry.new(entry)
       end
 
