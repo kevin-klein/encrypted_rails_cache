@@ -12,9 +12,9 @@ module ActiveSupport
         decode_cipher = OpenSSL::Cipher.new('AES-256-CBC')
         decode_cipher.decrypt
         decode_cipher.key = [Rails.application.secrets.cache_key].pack('H*')
-        decode_cipher.iv = Base64.decode(data['iv'])
+        decode_cipher.iv = Base64.decode64(data['iv'])
 
-        plain = decode_cipher.update(Base64.decode(data['data']))
+        plain = decode_cipher.update(Base64.decode64(data['data']))
         plain = plain + decode_cipher.final
 
         entry = Marshal.load(serialized_entry) rescue serialized_entry
